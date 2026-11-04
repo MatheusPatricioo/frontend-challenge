@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { App, Button, Popconfirm, Space } from 'antd';
 
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined, TeamOutlined } from '@ant-design/icons';
 import { handleServiceError, hasServiceError } from '@domain/@shared/service.helper';
 import { sleep } from '@domain/@shared/sleep';
 
@@ -16,9 +16,19 @@ export function RecordsActionsCell({ record }: Props) {
     const [isPopconfirmVisible, setIsPopconfirmVisible] = useState(false);
     const [isSending, setIsSending] = useState(false);
 
-    const { setRecordId, setIsEditModalVisible, fetchRecords } = useRecordsContext();
+    const {
+        setRecordId,
+        setIsEditModalVisible,
+        setIsInvolvementsDrawerVisible,
+        fetchRecords,
+    } = useRecordsContext();
 
     const app = App.useApp();
+
+    const handleInvolvements = () => {
+        setRecordId(record.id);
+        setIsInvolvementsDrawerVisible(true);
+    };
 
     const handleEdit = () => {
         setRecordId(record.id);
@@ -43,6 +53,13 @@ export function RecordsActionsCell({ record }: Props) {
 
     return (
         <Space size="middle">
+            <Button
+                type="text"
+                icon={<TeamOutlined />}
+                title="Envolvidos"
+                onClick={handleInvolvements}
+            />
+
             <Button
                 type="text"
                 icon={<EditOutlined />}

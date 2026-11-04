@@ -5,6 +5,7 @@ import { Button, Row, type TableColumnsType, Typography } from 'antd';
 import { Show } from '@domain/@shared/Show';
 import { Table } from '@domain/@shared/Table';
 import { CompaniesContextProvider } from '@domain/company/Companies.context';
+import { InvolvementsDrawer } from '@domain/involvement/components/InvolvementsDrawer';
 import { CreateRecordModal } from '@domain/record/components/CreateRecordModal';
 import { EditRecordModal } from '@domain/record/components/EditRecordModal';
 import { RecordsActionsCell } from '@domain/record/components/RecordsActionsCell';
@@ -49,6 +50,7 @@ export function Records() {
                         setIsCreateModalVisible,
                         isCreateModalVisible,
                         isEditModalVisible,
+                        isInvolvementsDrawerVisible,
                     }) => (
                         <Fragment>
                             <main>
@@ -78,6 +80,10 @@ export function Records() {
 
                             <Show when={isEditModalVisible}>
                                 <EditRecordModal />
+                            </Show>
+
+                            <Show when={isInvolvementsDrawerVisible}>
+                                <InvolvementsDrawer />
                             </Show>
                         </Fragment>
                     )}
