@@ -1,51 +1,17 @@
 import { Fragment } from 'react';
 
-import { Button, Row, type TableColumnsType, Typography } from 'antd';
+import { Button, Row, Typography } from 'antd';
 
-import { formatCpf, formatDate } from '@domain/@shared/format';
 import { Show } from '@domain/@shared/Show';
-import { Table } from '@domain/@shared/Table';
 import { CreatePersonModal } from '@domain/person/components/CreatePersonModal';
 import { EditPersonModal } from '@domain/person/components/EditPersonModal';
-import { PeopleActionsCell } from '@domain/person/components/PeopleActionsCell';
+import { PeopleTable } from '@domain/person/components/PeopleTable';
 import { PeopleContextProvider } from '@domain/person/People.context';
-import type { Person } from '@domain/person/person.type';
-
-const COLUMNS: TableColumnsType<Person.Model> = [
-    {
-        title: 'ID',
-        dataIndex: 'id',
-        render: value => `#${value}`,
-    },
-    {
-        title: 'Nome',
-        dataIndex: 'name',
-    },
-    {
-        title: 'CPF',
-        dataIndex: 'cpf',
-        render: formatCpf,
-    },
-    {
-        title: 'E-mail',
-        dataIndex: 'email',
-    },
-    {
-        title: 'Data de nascimento',
-        dataIndex: 'birth_date',
-        render: formatDate,
-    },
-    {
-        render: (_, record) => <PeopleActionsCell person={record} />,
-    },
-];
 
 export function People() {
     return (
         <PeopleContextProvider>
             {({
-                  isLoading,
-                  people,
                   setIsCreateModalVisible,
                   isCreateModalVisible,
                   isEditModalVisible,
@@ -65,11 +31,7 @@ export function People() {
                             </Button>
                         </Row>
 
-                        <Table
-                            columns={COLUMNS}
-                            dataSource={people}
-                            loading={isLoading}
-                        />
+                        <PeopleTable />
                     </main>
 
                     <Show when={isCreateModalVisible}>
