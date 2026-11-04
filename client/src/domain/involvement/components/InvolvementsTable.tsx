@@ -1,4 +1,4 @@
-import { type TableColumnsType, Tag } from 'antd';
+import { type TableColumnsType, Tag, Typography } from 'antd';
 
 import { formatCpf } from '@domain/@shared/format';
 import { Table } from '@domain/@shared/Table';
@@ -11,12 +11,13 @@ import { RemoveInvolvementButton } from './RemoveInvolvementButton';
 const COLUMNS: TableColumnsType<Involvement.Model> = [
     {
         title: 'Nome',
-        dataIndex: ['person', 'name'],
+        render: (_, { person }) => person
+            ? person.name
+            : <Typography.Text type="secondary">Pessoa excluída</Typography.Text>,
     },
     {
         title: 'CPF',
-        dataIndex: ['person', 'cpf'],
-        render: formatCpf,
+        render: (_, { person }) => person ? formatCpf(person.cpf) : '—',
     },
     {
         title: 'Envolvimento',

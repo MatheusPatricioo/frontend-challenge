@@ -15,6 +15,6 @@ export namespace Involvement {
         created_at: string;
         updated_at: string | null;
         deleted_at: string | null;
-        person: Person.Model;
+        person: Person.Model | null;
     };
 }
