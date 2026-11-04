@@ -37,6 +37,8 @@ Quando a API retornar **409** (CPF duplicado), a mensagem aparece no próprio ca
     - Lista de envolvidos: nome, CPF e tipo (tag colorida por tipo).
     - Botão para remover um envolvido, com confirmação.
     - Formulário para vincular: seleção de pessoa (com busca) e tipo de envolvimento.
+- Pessoas já vinculadas ao relato não aparecem na seleção, para evitar a duplicata antes de chegar ao back. O 409 continua tratado.
+- Tipos exibidos em português: Relatante, Testemunha, Vítima e Denunciado.
 
 ## Decisões
 
@@ -48,9 +50,10 @@ Quando a API retornar **409** (CPF duplicado), a mensagem aparece no próprio ca
 
 ## Riscos e pontos de atenção
 
-- **Não existe edição de envolvimento** (a API não tem PUT). Para trocar o tipo, o usuário remove e vincula de novo.
+- **Não existe edição de envolvimento** (a API não tem PUT). A ideia era trocar o tipo removendo e vinculando de novo, mas os testes mostraram que isso falha: o back faz soft delete, e o índice único (relato, pessoa) continua valendo para o envolvimento excluído. A API responde 500. Como o back-end não pode ser alterado, registrei como limitação conhecida.
+- **O mesmo acontece com o CPF:** o CPF de uma pessoa excluída não pode ser reutilizado (500 pelo mesmo motivo). No front, os erros 5xx exibem uma mensagem amigável em vez do SQL.
 - **Exclusão de pessoa já vinculada a relatos:** o comportamento depende do back (soft delete). Vou validar manualmente e registrar nas evidências.
-- **Formato dos erros 422/409:** preciso confirmar o formato que a API devolve para exibir as mensagens corretamente.
+- **Formato dos erros:** confirmado durante a implementação. A API responde `{ statusCode, error: { type, description } }`. O 409 é exibido no campo correspondente; os demais erros, em notificação.
 - **`/people` não tem filtro nem paginação:** a busca é feita no front. Para o volume deste cenário isso é suficiente.
 
 ## Fora do escopo
