@@ -25,7 +25,7 @@ Validações no formulário:
 
 - Todos os campos obrigatórios.
 - E-mail em formato válido.
-- CPF com 11 dígitos, digitado com máscara (`000.000.000-00`) e enviado só com números.
+- CPF com 11 dígitos. O campo aceita só números e remove pontuação ao colar; na tabela, o CPF aparece formatado (`000.000.000-00`).
 - Data de nascimento não pode ser futura.
 
 Quando a API retornar **409** (CPF duplicado), a mensagem aparece no próprio campo de CPF.
