@@ -11,6 +11,7 @@ export type Values = {
 };
 
 const CPF_LENGTH = 11;
+const DATE_FORMATS = ['DD/MM/YYYY', 'DDMMYYYY'];
 
 const onlyDigits = (value: string) =>
     value.replace(/\D/g, '').slice(0, CPF_LENGTH);
@@ -57,7 +58,7 @@ export function PersonFields() {
                 rules={[{ required: true, message: 'Por favor, selecione a data de nascimento.' }]}
             >
                 <DatePicker
-                    format="DD/MM/YYYY"
+                    format={DATE_FORMATS}
                     placeholder="DD/MM/AAAA"
                     disabledDate={isFutureDate}
                     style={{ width: '100%' }}
