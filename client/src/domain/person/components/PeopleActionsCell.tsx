@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { App, Button, Popconfirm, Space } from 'antd';
 
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { hideInternalError } from '@domain/@shared/hide-internal-error';
 import { handleServiceError, hasServiceError } from '@domain/@shared/service.helper';
 import { sleep } from '@domain/@shared/sleep';
 
@@ -35,7 +36,7 @@ export function PeopleActionsCell({ person }: Props) {
         setIsSending(false);
 
         if (hasServiceError(response))
-            return handleServiceError(app, response);
+            return handleServiceError(app, response, hideInternalError);
 
         setIsPopconfirmVisible(false);
         fetchPeople();

@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import { App, Divider, Form, Modal } from 'antd';
 
+import { hideInternalError } from '@domain/@shared/hide-internal-error';
 import { isConflictError } from '@domain/@shared/is-conflict-error';
 import { handleServiceError, hasServiceError } from '@domain/@shared/service.helper';
 import { sleep } from '@domain/@shared/sleep';
@@ -46,7 +47,7 @@ export function EditPersonModal() {
             return form.setFields([{ name: 'cpf', errors: [DUPLICATED_CPF_MESSAGE] }]);
 
         if (hasServiceError(response))
-            return handleServiceError(app, response);
+            return handleServiceError(app, response, hideInternalError);
 
         close();
         fetchPeople();
