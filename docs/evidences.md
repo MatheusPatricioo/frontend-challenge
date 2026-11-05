@@ -23,6 +23,10 @@ Todos os cenários foram validados manualmente no ambiente Docker do projeto, co
 | 2.6 | Envolvidos de outro relato | OK |
 | 2.7 | Vincular de novo uma pessoa removida | Falha no back-end (tratada no front) |
 | 2.8 | Excluir pessoa vinculada a um relato | OK após correção no front |
+| E.1 | Busca por nome ou CPF | OK |
+| E.2 | Indicadores e gráfico no Dashboard | OK |
+| E.3 | Interface em português | OK |
+| E.4 | Painel de envolvidos em tela pequena | OK |
 
 Os problemas encontrados estão detalhados na seção [Problemas encontrados](#problemas-encontrados).
 
@@ -141,13 +145,13 @@ Os problemas encontrados estão detalhados na seção [Problemas encontrados](#p
 
 **Passos**
 1. Abrir o modal de cadastro.
-2. Digitar `15031990` no campo de data e sair do campo.
+2. Digitar `15031990` no campo de data.
 
 **Esperado:** a data é reconhecida como 15/03/1990.
 
-**Obtido:** na primeira rodada de testes, a data só era aceita com as barras. Corrigido no commit `fix: accept birth date typed without separators`: o campo passou a aceitar os dois formatos e exibe a data com barras.
+**Obtido:** na primeira rodada de testes, a data só era aceita com as barras. Corrigido no commit `fix: accept birth date typed without separators`: o campo passou a aceitar os dois formatos e exibe a data com barras assim que os oito dígitos são digitados.
 
-![Data sem barras](evidences/epic1/epic1-09-date-without-separators.png)
+Observação: o campo aceita digitar mais caracteres do que o formato prevê, mas um valor inválido é descartado ao sair do campo, e a data anterior é mantida. Nada inválido chega ao formulário.
 
 ---
 
@@ -267,6 +271,59 @@ Observação: o relato continua **Identificado**. O back-end mantém o envolvime
 
 ---
 
+## Extras
+
+### E.1 Busca por nome ou CPF
+
+**Passos**
+1. Em **Pessoas**, digitar "ana", depois "ANA", depois "123.456" e depois "123456" no campo de busca.
+2. Limpar o campo.
+
+**Esperado:** as quatro buscas encontram Ana Silva, e ao limpar a lista completa volta.
+
+**Obtido:** conforme esperado. A busca ignora acentos e maiúsculas no nome e compara o CPF só pelos dígitos.
+
+![Busca de pessoas](evidences/extras/extras-02-search-people.png)
+
+### E.2 Indicadores e gráfico no Dashboard
+
+**Passos**
+1. Acessar o **Dashboard**.
+2. Comparar os números com as listas de Empresas, Relatos e Pessoas.
+
+**Esperado:** os indicadores batem com as listas, e o gráfico mostra a distribuição dos relatos por status.
+
+**Obtido:** conforme esperado. Cada status tem sua cor e a porcentagem em relação ao total de relatos.
+
+![Dashboard](evidences/extras/extras-01-dashboard.png)
+
+### E.3 Interface em português
+
+**Passos**
+1. Abrir o calendário da data de nascimento.
+2. Em **Pessoas**, buscar um termo sem resultados.
+
+**Esperado:** os textos dos componentes em português.
+
+**Obtido:** antes da configuração, os componentes do Ant Design exibiam textos em inglês, como os dias da semana, o botão "Today" e o "No data" da tabela vazia. Com o idioma configurado no `App.tsx`, aparecem em português.
+
+![Calendário em português](evidences/extras/extras-03-locale-after.png)
+![Tabela vazia em português](evidences/extras/extras-04-locale-empty-table.png)
+
+### E.4 Painel de envolvidos em tela pequena
+
+**Passos**
+1. No DevTools, simular uma tela de 436 px de largura.
+2. Abrir o painel de envolvidos de um relato.
+
+**Esperado:** o painel cabe na tela e continua funcional.
+
+**Obtido:** conforme esperado. O painel se ajusta à largura disponível; o CPF quebra em duas linhas por falta de espaço, sem prejudicar o uso.
+
+![Painel em tela pequena](evidences/extras/extras-05-drawer-small-screen.png)
+
+---
+
 ## Problemas encontrados
 
 ### Back-end: soft delete com índice único
@@ -302,4 +359,10 @@ Descrito em 1.9. Corrigido em `fix: accept birth date typed without separators`.
 
 O comando não retorna nada.
 
-**Tipagem e testes.** A checagem de tipos (`tsc -p tsconfig.app.json --noEmit`) roda sem erros e os testes existentes (`vitest run`) passam. A checagem acusava 4 erros de tipo pré-existentes no mock de `service.helper.test.ts`, corrigidos em `test: fix antd app mock typing in service helper tests`.
+**Lint.** `pnpm lint` roda sem problemas. Na primeira execução, apontou a ordem dos imports (regra `simple-import-sort` do projeto) e a indentação de um arquivo alterado; ambos foram corrigidos em `style: fix import order and indentation reported by lint`.
+
+**Tipagem.** `tsc -p tsconfig.app.json --noEmit` roda sem erros. A checagem acusava 4 erros de tipo pré-existentes no mock de `service.helper.test.ts`, corrigidos em `test: fix antd app mock typing in service helper tests`.
+
+**Testes unitários.** `pnpm test` passa com 20 testes: os 7 que já existiam e 13 novos, que cobrem a formatação de CPF e data, a identificação de conflito (409), a mensagem amigável para erros 5xx e a conversão entre o formulário de pessoa e a API.
+
+**Build de produção.** `pnpm build` gera o build sem erros. O Vite avisa que o pacote final passa de 500 kB, principalmente pelo Ant Design; a sugestão de code splitting está nas melhorias futuras do design plan.
