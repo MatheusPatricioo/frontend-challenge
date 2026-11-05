@@ -1,8 +1,9 @@
+import type { useAppProps } from 'antd/es/app/context';
+
 import { describe, expect, it, vi } from 'vitest';
 
 import { handleServiceError, hasServiceError } from './service.helper';
 import type { Service } from './service.type';
-import type { useAppProps } from 'antd/es/app/context';
 
 describe('hasServiceError', () => {
     it('returns true when response is an Error instance', () => {

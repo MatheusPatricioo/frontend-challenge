@@ -12,10 +12,10 @@ export function People() {
     return (
         <PeopleContextProvider>
             {({
-                  setIsCreateModalVisible,
-                  isCreateModalVisible,
-                  isEditModalVisible,
-              }) => (
+                setIsCreateModalVisible,
+                isCreateModalVisible,
+                isEditModalVisible,
+            }) => (
                 <Fragment>
                     <main>
                         <Row justify="space-between" align="middle">

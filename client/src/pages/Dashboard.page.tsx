@@ -5,8 +5,8 @@ import { Alert, Card, Col, Progress, Row, Statistic, theme, Typography } from 'a
 import { AuditOutlined, BuildOutlined, ClockCircleOutlined, TeamOutlined } from '@ant-design/icons';
 import { CompaniesContextProvider } from '@domain/company/Companies.context';
 import { PeopleContextProvider } from '@domain/person/People.context';
-import { RECORD_STATUS_LABELS } from '@domain/record/record-status.helper';
 import type { Record } from '@domain/record/record.type';
+import { RECORD_STATUS_LABELS } from '@domain/record/record-status.helper';
 import { RecordsContextProvider } from '@domain/record/Records.context';
 
 const RECORD_STATUSES = Object.keys(RECORD_STATUS_LABELS) as Record.Status[];

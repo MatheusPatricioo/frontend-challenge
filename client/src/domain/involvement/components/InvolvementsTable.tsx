@@ -3,8 +3,8 @@ import { type TableColumnsType, Tag, Typography } from 'antd';
 import { formatCpf } from '@domain/@shared/format';
 import { Table } from '@domain/@shared/Table';
 
-import { INVOLVEMENT_TYPE_COLORS, INVOLVEMENT_TYPE_LABELS } from '../involvement-type.helper';
 import type { Involvement } from '../involvement.type';
+import { INVOLVEMENT_TYPE_COLORS, INVOLVEMENT_TYPE_LABELS } from '../involvement-type.helper';
 import { useInvolvementsContext } from '../Involvements.context';
 import { RemoveInvolvementButton } from './RemoveInvolvementButton';
 

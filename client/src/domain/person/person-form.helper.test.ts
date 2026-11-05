@@ -2,8 +2,8 @@ import dayjs from 'dayjs';
 import { beforeEach, describe, expect, it } from 'vitest';
 
 import type { Values } from './components/PersonFields';
-import { toPersonBody, toPersonValues } from './person-form.helper';
 import type { Person } from './person.type';
+import { toPersonBody, toPersonValues } from './person-form.helper';
 
 describe('toPersonBody', () => {
     it('converts the birth date to the API format and keeps the other fields', () => {

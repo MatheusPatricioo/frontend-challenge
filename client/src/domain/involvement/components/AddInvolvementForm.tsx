@@ -10,8 +10,8 @@ import { sleep } from '@domain/@shared/sleep';
 import { usePeopleContext } from '@domain/person/People.context';
 
 import { createInvolvement } from '../api/create-involvement.service';
-import { INVOLVEMENT_TYPE_LABELS } from '../involvement-type.helper';
 import type { Involvement } from '../involvement.type';
+import { INVOLVEMENT_TYPE_LABELS } from '../involvement-type.helper';
 import { useInvolvementsContext } from '../Involvements.context';
 
 type Values = {
