@@ -10,14 +10,8 @@ import { CreateRecordModal } from '@domain/record/components/CreateRecordModal';
 import { EditRecordModal } from '@domain/record/components/EditRecordModal';
 import { RecordsActionsCell } from '@domain/record/components/RecordsActionsCell';
 import type { Record } from '@domain/record/record.type';
+import { RECORD_STATUS_LABELS } from '@domain/record/record-status.helper';
 import { RecordsContextProvider } from '@domain/record/Records.context';
-
-const STATUS_LABELS: Record<Record.Status, string> = {
-    awaiting_investigation: 'Aguardando investigação',
-    investigation_in_progress: 'Investigação em andamento',
-    resolved: 'Resolvido',
-    archived: 'Arquivado',
-};
 
 const COLUMNS: TableColumnsType<Record.Model> = [
     {
@@ -32,7 +26,7 @@ const COLUMNS: TableColumnsType<Record.Model> = [
     {
         title: 'Status',
         dataIndex: 'status',
-        render: value => STATUS_LABELS[value as Record.Status] ?? value,
+        render: value => RECORD_STATUS_LABELS[value as Record.Status] ?? value,
     },
     {
         render: (_, record) => <RecordsActionsCell record={record} />,
